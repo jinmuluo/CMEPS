@@ -1642,6 +1642,23 @@ contains
     end if
 
     !-----------------------------------------------------------------------------
+    ! to atm: NH3 emissions fluxes from land (FANv3)
+    ! ctsm5.3.40-fan/cmeps doesn't have this part!!
+    ! should we consider the FAN to atm flag here? -- Jinmu 2025
+    !-----------------------------------------------------------------------------
+    if (phase == 'advertise') then
+       call addfld_from(complnd, 'Fall_FAN_nh3')
+       call addfld_to(compatm, 'Fall_FAN_nh3')
+    else
+       if ( fldchk(is_local%wrap%FBImp(complnd, complnd), 'Fall_FAN_nh3', rc=rc) .and. &
+            fldchk(is_local%wrap%FBExp(compatm)         , 'Fall_FAN_nh3', rc=rc)) then
+          call addmap_from(complnd, 'Fall_FAN_nh3', compatm, mapconsf, map_fracname_lnd2atm, lnd2atm_map)
+          call addmrg_to(compatm, 'Fall_FAN_nh3', &
+               mrg_from=complnd, mrg_fld='Fall_FAN_nh3', mrg_type='copy_with_weights', mrg_fracname=mrg_fracname_lnd2atm_flux)
+       end if
+    end if
+
+    !-----------------------------------------------------------------------------
     ! to atm: fire emissions fluxes from land
     !-----------------------------------------------------------------------------
     ! 'wild fire emission fluxes'
