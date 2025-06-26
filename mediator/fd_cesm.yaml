@@ -138,6 +138,10 @@
        canonical_units: molecules/m2/sec
        description: land export - FAN NH3 emission fluxes from land
      #
+     - standard_name: Fall_nox
+       canonical_units: molecules/m2/sec
+       description: land export - FAN + CLM NOx emission fluxes from land
+     #
      - standard_name: Sl_anidf
        canonical_units: 1
        description: lnd import to med

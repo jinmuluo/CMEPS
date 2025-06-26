@@ -1645,8 +1645,6 @@ contains
 
     !-----------------------------------------------------------------------------
     ! to atm: NH3 emissions fluxes from land (FANv3)
-    ! ctsm5.3.40-fan/cmeps doesn't have this part!!
-    ! should we consider the FAN to atm flag here? -- Jinmu 2025
     !-----------------------------------------------------------------------------
     if (phase == 'advertise') then
        call addfld_from(complnd, 'Fall_FAN_nh3')
@@ -1657,6 +1655,21 @@ contains
           call addmap_from(complnd, 'Fall_FAN_nh3', compatm, mapconsf, map_fracname_lnd2atm, lnd2atm_map)
           call addmrg_to(compatm, 'Fall_FAN_nh3', &
                mrg_from=complnd, mrg_fld='Fall_FAN_nh3', mrg_type='copy_with_weights', mrg_fracname=mrg_fracname_lnd2atm_flux)
+       end if
+    end if
+
+    !-----------------------------------------------------------------------------
+    ! to atm: NOx emissions fluxes from land (FANv3 + CLM)
+    !-----------------------------------------------------------------------------
+    if (phase == 'advertise') then
+       call addfld_from(complnd, 'Fall_nox')
+       call addfld_to(compatm, 'Fall_nox')
+    else
+       if ( fldchk(is_local%wrap%FBImp(complnd, complnd), 'Fall_nox', rc=rc) .and. &
+            fldchk(is_local%wrap%FBExp(compatm)         , 'Fall_nox', rc=rc)) then
+          call addmap_from(complnd, 'Fall_nox', compatm, mapconsf, map_fracname_lnd2atm, lnd2atm_map)
+          call addmrg_to(compatm, 'Fall_nox', &
+               mrg_from=complnd, mrg_fld='Fall_nox', mrg_type='copy_with_weights', mrg_fracname=mrg_fracname_lnd2atm_flux)
        end if
     end if
 
