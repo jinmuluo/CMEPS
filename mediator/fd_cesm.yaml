@@ -135,11 +135,11 @@
        description: lnd import to med - MEGAN voc emission fluxes from lnd (1->20)
      #
      - standard_name: Fall_FAN_nh3
-       canonical_units: molecules/m2/sec
+       canonical_units: gN/m2/sec
        description: land export - FAN NH3 emission fluxes from land
      #
      - standard_name: Fall_nox
-       canonical_units: molecules/m2/sec
+       canonical_units: gN/m2/sec
        description: land export - FAN + CLM NOx emission fluxes from land
      #
      - standard_name: Sl_anidf
